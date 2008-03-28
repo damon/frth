@@ -1,0 +1,46 @@
+8
+
+dir
+1
+http://opus.winelibrary.com/css-framework/trunk
+http://opus.winelibrary.com/css-framework
+
+
+
+2008-01-10T05:26:44.953530Z
+1
+kastner
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+fa95be22-d616-4802-9acd-ace0d6b83c6a
+
+images
+dir
+
+index.html
+file
+4
+
+
+
+2008-01-10T06:30:10.000000Z
+e72615b9a99d4605f1ee6d96561868e5
+2008-01-10T06:42:08.839327Z
+4
+kastner
+
+stylesheets
+dir
+

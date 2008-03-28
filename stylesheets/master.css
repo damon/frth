@@ -1,0 +1,80 @@
+/*
+Colors:
+*/
+
+/* Main */
+body {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: medium;
+  text-align: center;
+  color: #ccc;
+  background: #161616;
+  margin: 2.75em 0.4em 0 0.4em;
+}
+
+a { text-decoration: underline; font-weight: bold; }
+a:link { color: #c6a952; }
+a:hover { color: #c6a952; }
+a:visited { color: #c6a952; }
+
+#page {
+  font-size: 87.5%; /* ~14px */
+  line-height: 1.75em;
+  width: 68.571em; /* ~960px at default text size */
+  margin: 0 auto;
+  text-align: left;
+}
+
+#content {
+  clear: both;
+}
+
+#footer {
+  clear: both;
+  font-size: 75%;
+  padding-left: 2.5em;
+  color: #333;
+}
+
+/* Repeated elements */
+#nav {
+  background: #0c0c0c;
+  float: left;
+  width: 100%;
+}
+
+#nav li {
+  float: left;
+}
+
+#nav li a {
+  display: block;
+}
+
+/* Page specific elements */
+
+/* Clear fix elements */
+
+/* clear fix elements */
+#page:after, 
+#column:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+#page:after, 
+#column:after {
+  display: inline-block;
+}
+
+/* Hides from IE-mac \*/
+* html #page,
+* html #column {height: 1%;}
+#page, 
+#column {
+  display: block;
+}
+/* End hide from IE-mac */

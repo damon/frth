@@ -1,0 +1,7 @@
+#dashboard #news-help img {
+  width: 16px;
+}
+
+#dashboard #dash-cart img {
+  width: 16px;
+}
