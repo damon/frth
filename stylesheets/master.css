@@ -4,7 +4,7 @@ Colors:
 
 /* Main */
 body {
-  font-family: Verdana, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   font-size: medium;
   text-align: center;
   color: #ccc;
@@ -54,8 +54,6 @@ a:visited { color: #c6a952; }
 /* Page specific elements */
 
 /* Clear fix elements */
-
-/* clear fix elements */
 #page:after, 
 #column:after {
     content: ".";
