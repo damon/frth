@@ -8,8 +8,9 @@ body {
   font-size: medium;
   text-align: center;
   color: #4B4742;
-  background: #1A538C;
-  margin: 2.75em 0.4em 0 0.4em;
+  background: url(/images/body.jpg) top left repeat-x;
+  background-color: #1A538C;
+  margin: 0;
   text-align: left;
   color: #A0BFFA;
 }
@@ -21,11 +22,29 @@ a, a:link, a:visited { text-decoration: underline; font-weight: bold; color: #ff
 
 #more { display: none; }
 
+#about {
+  position: absolute;
+  top: 440px;
+  left: 32px;
+  width: 300px;
+  font-size: 14px;
+  line-height: 18px;
+  font-family: "Helvetica Neue", "Verdana", "Helvetica", sans-serif;
+}
+
+#go { font-family:Georgia,"Times New Roman",serif;  font-size: 26px; margin-top: 32px; }
+
+#about p {
+  margin-bottom: 18px;
+}
+
 #page {
-  width: 80%;
-  margin: 0 auto;
+  margin: 0;
+  background: url(/images/logo.jpg) top left no-repeat;
+  padding: 80px 0 0 360px;
   font-size: 87.5%; /* ~14px */
   line-height: 1.75em;
+  min-height: 400px;
 /*  background: white;*/
 }
 
@@ -62,6 +81,7 @@ a, a:link, a:visited { text-decoration: underline; font-weight: bold; color: #ff
 
 #tweets {
   width: 100%;
+  padding-top: 32px;
   list-style: none;
 }
 
