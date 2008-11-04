@@ -90,8 +90,12 @@ def get_tweets
 end
 
 def format_tweet(tweet)
-  tweet['formatted'] = gravatar_for_tweet(tweet) << format_content(tweet['text'])
+  tweet['formatted'] = gravatar_for_tweet(tweet) << date_link(tweet) << format_content(tweet['text'])
   tweet
+end
+
+def date_link(tweet)
+  %(<p class='date'>%s</p>) % tweet['created_at']
 end
 
 def format_content(text)
@@ -102,7 +106,7 @@ def format_content(text)
     begin
       case URI.parse(raw_url).host
       when 'snaptweet.com'
-        result.gsub!(raw_url, %(<br/><a href='#{raw_url}'><img src='#{raw_url}.thumb' alt=''/></a>))
+        result.gsub!(raw_url, %(<div class='snaptweet'><a href='#{raw_url}'><img src='#{raw_url}.thumb' alt=''/></a></div>))
       else
         result.gsub!(raw_url, %(<a href='#{raw_url}'>#{raw_url}</a>))
       end
@@ -113,6 +117,7 @@ def format_content(text)
   result.gsub!(/(^|\s)@([[:alnum:]_]+)/) do 
     "#{$1}<a href='http://twitter.com/#{$2}' title='See twitter profile for #{$2}'>@#{$2}</a>"
   end
+  
   '<p>%s</p>' % result
 end
 

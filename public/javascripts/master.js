@@ -1,6 +1,6 @@
 var tweets = [];
 var max_tweet = 0;
-var page_size = 40;
+var page_size = 10;
  
  function prune() {
    var items = $('#tweets li').slice(page_size)

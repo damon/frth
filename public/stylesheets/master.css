@@ -39,6 +39,8 @@ a, a:link, a:visited { text-decoration: underline; font-weight: bold; color: #ff
 }
 
 #go { font-family:Georgia,"Times New Roman",serif;  font-size: 26px; margin-top: 32px; }
+.tweet .date { font-family:Georgia,"Times New Roman", serif; font-size: 12px; color: #fff; text-align: right; font-style: italic;}
+
 
 #about p {
   margin-bottom: 18px;
@@ -56,6 +58,15 @@ a, a:link, a:visited { text-decoration: underline; font-weight: bold; color: #ff
 
 #content {
   clear: both;
+}
+
+.snaptweet {
+  height: 75px;
+  text-align: right;
+  border-top: 1px ;
+}
+.snaptweet img {
+  float: right;
 }
 
 .gravatar {
