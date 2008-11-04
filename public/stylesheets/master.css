@@ -18,6 +18,8 @@ a:hover { color: #c6a952; }
 a:visited { color: #c6a952; }
 
 #page {
+  width: 80%;
+  margin: 0 auto;
   font-size: 87.5%; /* ~14px */
   line-height: 1.75em;
 /*  background: white;*/
@@ -49,19 +51,21 @@ a:visited { color: #c6a952; }
 }
 
 #tweets {
-  position: absolute;
-  left: 0;
-  margin: 0;
-  padding: 0;
   width: 100%;
   list-style: none;
 }
 
+.tweet a, .tweet a:visited { color: #fff; }
+
 .tweet {
+  color: #B9C6FF;
+  background: url(/images/box.jpg) bottom left repeat-x;
   position: relative;
+  padding: 18px;
   width: 28.571em; /* 400.0px at 14px base */
-  background: white;
-  border: 1px solid #999;
+  border-top: 1px #69768C solid;
+  margin-bottom: 9px;
+  text-align: left;
 }
 
 /* Clear fix elements */
