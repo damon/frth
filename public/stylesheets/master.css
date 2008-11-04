@@ -15,10 +15,16 @@ body {
   color: #A0BFFA;
 }
 
-h1 { font-family:Georgia,"Times New Roman",serif; font-size: 48px; color: #A0BFFA; margin: 0 0 32px 0; text-align: left; }
+h1 {
+  padding: 0 18px;
+  width: 28.571em; /* 400.0px at 14px base */
+  text-align: center;
+}
+h1 img {
+  width: 22.000em; /* 308.0px at 14px base */
+}
 
 a, a:link, a:visited { text-decoration: underline; font-weight: bold; color: #fff; }
-
 
 #more { display: none; }
 
@@ -41,7 +47,7 @@ a, a:link, a:visited { text-decoration: underline; font-weight: bold; color: #ff
 #page {
   margin: 0;
   background: url(/images/logo.jpg) top left no-repeat;
-  padding: 80px 0 0 360px;
+  padding: 3.571em 0 0 360px;
   font-size: 87.5%; /* ~14px */
   line-height: 1.75em;
   min-height: 400px;
