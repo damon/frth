@@ -49,7 +49,7 @@ namespace :deploy do
   task :migrate do
   end
   
-  def :write_thin_config
+  task :write_thin_config do
     config = {
       'environment' => 'production',
       'chdir' => current_path,
