@@ -33,7 +33,7 @@ get "/tweets" do
 end
 
 get "/fetch-tweets-from-twitter" do
-  return CACHE["tweets"] if CACHE["last_fetch"] && (Time.now - CACHE["last_Fetch"]) < TWITTER_WAIT_TIMEOUT
+  return CACHE["tweets"] if CACHE["last_fetch"] && (Time.now - CACHE["last_fetch"]) < TWITTER_WAIT_TIMEOUT
   
   CACHE["last_fetch"] = Time.now
   CACHE["tweets"] = get_tweets
