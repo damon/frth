@@ -138,7 +138,7 @@ def url; "http://search.twitter.com/search.json?q=%s&since_id=%s"; end
 
 def gravatar_for_tweet(tweet)
   if (email = EMAILS[tweet['from_user']])
-    %(<img class='gravatar' src='#{gravatar_url(email, :size => '80px')}' alt='#{tweet['from']}'/>)
+    %(<a class='gravatar' href='http://twitter.com/#{tweet['from_user']}/statuses/#{tweet['id']}'><img src='#{gravatar_url(email, :size => '80px')}' alt='#{tweet['from']}'/></a>)
   else
     puts "Could not find email for #{tweet['from_user']}"
     ''
