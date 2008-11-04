@@ -82,7 +82,7 @@ def format_content(text)
 end
 
 def sort_tweets(tweets)
-  tweets.sort {|a,b| b["id"] <=> a["id"]}
+  tweets.sort {|a,b| a["id"] <=> b["id"]}
 end
 
 def get_tweets_for(user)

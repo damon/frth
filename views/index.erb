@@ -6,14 +6,15 @@
     if (tweets.length) {
       tweet = tweets.pop();
       tweet_li = $("<li class='tweet'></li>")
-        .html(tweets[0].formatted)
-        .appendTo("#tweets")
-        .opacity(0);
-      tweet_li.onload(function() {
-        $(this).css({top: -$(this).height()})
-          .opacity(100)
-          .animate({top: 0});
-      });
+        .html(tweet.formatted)
+        .prependTo("#tweets");
+      setTimeout(function() {
+        // console.log($(this).height());
+        // $(this).css({top: -1 * $(this).height() + "px"});
+        // $(this).css({top: -$(this).height()})
+        //   .css({opacity: 10})
+        //   .animate({top: 0});
+      }, 100);
       setTimeout(display_next_tweet, 1500);
     }
     else {
