@@ -4,6 +4,7 @@ require 'sinatra'
 require 'rubygems'
 require 'active_support'
 require 'json'
+require 'open-uri'
 
 TWITTER_WAIT_TIMEOUT = 60 unless Object.const_defined?("TWITTER_WAIT_TIMEOUT")
 
@@ -24,13 +25,16 @@ get "/" do
 end
 
 get "/tweets" do
-  
+  CACHE["tweets"]
 end
 
 get "/fetch-tweets-from-twitter" do
-  return if CACHE["last_fetch"] && (Time.now - CACHE["last_Fetch"]) < TWITTER_WAIT_TIMEOUT
+  return CACHE["tweets"] if CACHE["last_fetch"] && (Time.now - CACHE["last_Fetch"]) < TWITTER_WAIT_TIMEOUT
   
+  CACHE["last_Fetch"] = Time.now
   CACHE["tweets"] = get_tweets
+  
+  redirect "/"
 end
 
 def tweeters
@@ -38,17 +42,22 @@ def tweeters
 end
 
 def tweet_terms
-  %w|frth|
+  %w|front|
 end
 
 def get_tweets
-  TWEETERS.collect do |tweeter|
-    get_tweets_for(tweeter)
+  begin
+    tweeters.collect do |tweeter|
+      get_tweets_for(tweeter)
+    end
+  rescue
+    CACHE["tweets"] || {}
   end
 end
 
 def get_tweets_for(user)
-  json_for_url(CGI.escape("from:#{user} #{tweet_terms.join(" ")}"))
+  json = json_for_url(CGI.escape("from:#{user} #{tweet_terms.join(" ")}"))
+  JSON.parse(json)
 end
 
 def json_for_url(terms)
