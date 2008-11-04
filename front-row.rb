@@ -1,8 +1,9 @@
 $:.unshift "sinatra/lib"
 
+require 'rubygems'
+
 require 'digest/md5'
 require 'sinatra'
-require 'rubygems'
 require 'active_support'
 require 'json'
 require 'open-uri'
@@ -98,13 +99,17 @@ def format_content(text)
   # Make sure we have them small-to-big
   urls = URI.extract(text).uniq.sort
   urls.each do |raw_url|
-    inside = case URI.parse(raw_url).host
-    when 'snaptweet.com'
-      %(<img src='#{raw_url}.jpg' alt=''/>)
-    else
-      raw_url
+    begin
+      inside = case URI.parse(raw_url).host
+      when 'snaptweet.com'
+        %(<img src='#{raw_url}.thumb' alt=''/>)
+      else
+        raw_url
+      end
+      result.gsub!(raw_url, %(<a href='#{raw_url}'>#{inside}</a>))
+    rescue => boom
+      
     end
-    result.gsub!(raw_url, %(<a href='#{raw_url}'>#{inside}</a>))
   end
   result.gsub!(/(^|\s)@([[:alnum:]_]+)/) do 
     "#{$1}<a href='http://twitter.com/#{$2}' title='See twitter profile for #{$2}'>@#{$2}</a>"
