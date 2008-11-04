@@ -60,6 +60,10 @@ def get_tweets
   end
 end
 
+def format_content(text)
+  text
+end
+
 def sort_tweets(tweets)
   tweets.sort {|a,b| b["id"] <=> a["id"]}
 end
