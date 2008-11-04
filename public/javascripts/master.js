@@ -14,7 +14,11 @@ var page_size = 40;
    if (tweets.length) {
      tweet = tweets.pop();
      $('#more').hide();
-     $('#tweets').scrollbox.push($("<li class='tweet'></li>").html(tweet.formatted));
+     var item = $("<li class='tweet'></li>")
+     item.html(tweet.formatted);
+     item.find('img').thumbs();
+     $('#tweets').scrollbox.push(item);
+     $('#tweets li:last-child img')
      setTimeout(prune, 800);
      setTimeout(display_next_tweet, 1500);
    }
