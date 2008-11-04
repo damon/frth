@@ -54,7 +54,7 @@ get "/fetch" do
     previous = CACHE["last_fetch"]
     CACHE["last_fetch"] = Time.now
     begin
-      raw_tweets =  get_tweets.map.reverse { |tweet| format_tweet(tweet) }
+      raw_tweets =  (get_tweets.map { |tweet| format_tweet(tweet) }).reverse
       puts "Found #{raw_tweets.size} tweets to cache"
       CACHE["tweets"] = raw_tweets
       puts "Cached #{CACHE["tweets"].size} tweet(s)"
