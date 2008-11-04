@@ -1,0 +1,36 @@
+<script type="text/javascript" charset="utf-8">
+  var tweets = [];
+  var max_tweet = 0;
+  
+  function display_next_tweet() {
+    if (tweets.length) {
+      tweet = tweets.shift();
+      $("<li class='tweet'></li>")
+        .html(tweets[0].text)
+        .appendTo("#tweets");
+      
+      setTimeout(display_next_tweet, 1500);
+    }
+    else {
+      // get_more_tweets();
+      console.log("more tweets please");
+    }
+  }
+  
+  function get_more_tweets() {
+    $.getJSON('/tweets?since_id=' + max_tweet, function(server_tweets) {
+      tweets = server_tweets;
+      max_tweet = tweets[0].id;
+      display_next_tweet();
+      setTimeout(get_more_tweets, 10000);
+    });
+  }
+  
+  $(function() {
+    get_more_tweets();
+  });
+</script>
+
+<li id="tweets">
+  
+</li>

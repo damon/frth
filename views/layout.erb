@@ -20,25 +20,13 @@
   <link rel="stylesheet" href="stylesheets/ie7.css" type="text/css" media="screen" charset="utf-8" />
   <![endif]-->
   
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.5.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+  
 </head>
 <body id="<%= @body_id %>">
   <div id="page">
-    <div id="header">
-      <div id="logo">
-        
-      </div>
-      <ul id="nav">
-        <li id="t-home"><a href="#">Home</a></li>
-      </ul>
-    </div>
-
-    <div id="content">
-      <%= yield %>
-    </div>
-
-    <div id="footer">
-      &copy; 2008
-    </div>    
+    <%= yield %>
   </div>
 </body>
 </html>
