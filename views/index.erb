@@ -4,16 +4,20 @@
   
   function display_next_tweet() {
     if (tweets.length) {
-      tweet = tweets.shift();
-      $("<li class='tweet'></li>")
-        .html(tweets[0].text)
-        .appendTo("#tweets");
-      
+      tweet = tweets.pop();
+      tweet_li = $("<li class='tweet'></li>")
+        .html(tweets[0].formatted)
+        .appendTo("#tweets")
+        .opacity(0);
+      tweet_li.onload(function() {
+        $(this).css({top: -$(this).height()})
+          .opacity(100)
+          .animate({top: 0});
+      });
       setTimeout(display_next_tweet, 1500);
     }
     else {
-      // get_more_tweets();
-      console.log("more tweets please");
+      setTimeout(get_more_tweets, 1500);
     }
   }
   
@@ -22,7 +26,6 @@
       tweets = server_tweets;
       max_tweet = tweets[0].id;
       display_next_tweet();
-      setTimeout(get_more_tweets, 10000);
     });
   }
   
