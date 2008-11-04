@@ -55,8 +55,8 @@ namespace :deploy do
       'chdir' => current_path,
       'pid' => "#{shared_path}/pids/thin",
       'log' => "#{shared_path}/log/thin.log",
-      'address' => 127.0.0.1
-      'port' => 8900
+      'address' => '127.0.0.1',
+      'port' => 8900,
       'rackup' => 'config/config.ru',
       'max_conns' => 1024,
       'timeout' => 30,
