@@ -1,5 +1,6 @@
 $:.unshift "sinatra/lib"
 
+require 'digest/md5'
 require 'sinatra'
 require 'rubygems'
 require 'active_support'
@@ -14,6 +15,11 @@ before do
 
   # set css body id
   @body_id = "home"
+  
+  EMAILS = {
+    'wbruce' => 'bruce@codefluency.com',
+    'damon' => 'scales@pobox.com'
+  }
   
   # set up a cache object
   CACHE = MemCache.new 'localhost:11211', :namespace => 'front_row' unless Object.const_defined?("CACHE")
@@ -32,20 +38,38 @@ get "/tweets" do
   tweets.to_json
 end
 
+get '/reformat' do
+  CACHE["tweets"] = (CACHE['tweets'] || []).map do |tweet|
+    format_tweet(tweet)
+  end
+  redirect '/'
+end
+
 get "/fetch" do
   if CACHE["last_fetch"] && (Time.now - CACHE["last_fetch"]) < TWITTER_WAIT_TIMEOUT
     age = Time.now - CACHE["last_fetch"]
     puts "Retrieving existing tweets (cached #{age}s ago)"
   else
+    previous = CACHE["last_fetch"]
     CACHE["last_fetch"] = Time.now
-    CACHE["tweets"] = get_tweets.map { |tweet| format_tweet(tweet) }
-    puts "Cached #{CACHE["tweets"].size} tweet(s)"
+    begin
+      raw_tweets =  get_tweets.map { |tweet| format_tweet(tweet) }
+      puts "Found #{raw_tweets.size} tweets to cache"
+      CACHE["tweets"] = raw_tweets
+      puts "Cached #{CACHE["tweets"].size} tweet(s)"
+    rescue Exception => e
+      puts "Exception while retrieving tweets: #{e} #{e.backtrace[0,10].join(' | ')}"
+      CACHE["last_fetch"] = previous
+    end
   end
   redirect "/tweets"
 end
 
 def tweeters
   %w|wbruce damon|
+end
+
+def email_for(name)
 end
 
 def tweet_terms
@@ -57,9 +81,10 @@ def get_tweets
     tweets = tweeters.collect do |tweeter|
       get_tweets_for(tweeter)
     end.flatten
+    puts "Sorting #{tweets.size} tweets"
     sort_tweets(tweets)
-  rescue
-    CACHE["tweets"] || {}
+#  rescue
+ #   CACHE["tweets"] || {}
   end
 end
 
@@ -84,25 +109,36 @@ def format_content(text)
   result.gsub(/(^|\s)@([[:alnum:]_]+)/) do 
     "#{$1}<a href='http://twitter.com/#{$2}' title='See twitter profile for #{$2}'>@#{$2}</a>"
   end
+  '<p>%s</p>' % result
 end
 
 def sort_tweets(tweets)
-  tweets.sort {|a,b| a["id"] <=> b["id"]}
+  tweets.sort { |a, b| Integer(a["id"]) <=> Integer(b["id"]) }
 end
 
 def get_tweets_for(user)
   json = json_for_url(CGI.escape("from:#{user} #{tweet_terms.join(" ")}"))
-  JSON.parse(json)["results"].collect {|t| t["formatted"] = format_content(t["text"])}
+  puts "Got result: #{json}"
+  JSON.parse(json)["results"].map do |tweet|
+    tweet["formatted"] = format_content(tweet["text"])
+    tweet
+  end
 end
 
 def json_for_url(terms)
+  puts "Contacting: #{url % [terms, 0]}"
   open(url % [terms, 0]).read
 end
 
 def url; "http://search.twitter.com/search.json?q=%s&since_id=%s"; end
 
 def gravatar_for_tweet(tweet)
-  %(<img class='gravatar' src='#{gravatar_url tweet['from']}' alt='#{tweet['from']}'/>)
+  if (email = EMAILS[tweet['from_user']])
+    %(<img class='gravatar' src='#{gravatar_url(email, :size => '80px')}' alt='#{tweet['from']}'/>)
+  else
+    puts "Could not find email for #{tweet['from_user']}"
+    ''
+  end
 end
 
 def gravatar_url(email, gravatar_options={})

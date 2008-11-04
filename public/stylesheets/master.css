@@ -29,6 +29,12 @@ a:visited { color: #c6a952; }
   clear: both;
 }
 
+.gravatar {
+  float: left;
+  margin: 0 9px 9px 0;
+}
+.tweet p { padding-left: 89px; }
+
 #footer {
   clear: both;
   font-size: 75%;
