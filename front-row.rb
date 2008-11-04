@@ -37,7 +37,7 @@ get "/fetch" do
 
   CACHE["last_fetch"] = Time.now
   CACHE["tweets"] = get_tweets
-  
+  puts "Cached #{CACHE["tweets"].size} tweet(s)"
   redirect "/tweets"
 end
 
