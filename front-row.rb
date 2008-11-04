@@ -36,7 +36,7 @@ get "/fetch" do
   return CACHE["tweets"] if CACHE["last_fetch"] && (Time.now - CACHE["last_fetch"]) < TWITTER_WAIT_TIMEOUT
 
   CACHE["last_fetch"] = Time.now
-  CACHE["tweets"] = get_tweets
+  CACHE["tweets"] = get_tweets.map { |tweet| format_tweet(tweet) }
   puts "Cached #{CACHE["tweets"].size} tweet(s)"
   redirect "/tweets"
 end
@@ -58,6 +58,11 @@ def get_tweets
   rescue
     CACHE["tweets"] || {}
   end
+end
+
+def format_tweet(tweet)
+  tweet['formatted'] = format_content(tweet['text'])
+  tweet
 end
 
 def format_content(text)
