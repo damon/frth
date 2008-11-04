@@ -26,9 +26,14 @@
     });
   }
   
+  function insert_snaptweet_images(text) {
+    return text.replace(/(http:\/\/snaptweet.com\/\w+)/g, '<a href="$1"><img src="$1.jpg" alt=""/></a>');
+  }
+  
   $(function() {
     get_more_tweets();
   });
+  
 </script>
 
 <li id="tweets">
