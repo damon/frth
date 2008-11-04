@@ -61,7 +61,19 @@ def get_tweets
 end
 
 def format_content(text)
-  text
+  result = text.dup
+  # Make sure we have them small-to-big
+  urls = URI.extract(text).uniq.sort
+  urls.each do |raw_url|
+    inside = case URI.parse(raw_url).host
+    when 'snaptweet.com'
+      %(<img src='#{raw_url}.jpg' alt=''/>)
+    else
+      raw_url
+    end
+    result.gsub!(raw_url, %(<a href='#{raw_url}'>#{inside}</a>))
+  end
+  result  
 end
 
 def sort_tweets(tweets)
