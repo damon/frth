@@ -66,11 +66,10 @@ end
 
 def get_tweets_for(user)
   json = json_for_url(CGI.escape("from:#{user} #{tweet_terms.join(" ")}"))
-  JSON.parse(json)["results"]
+  JSON.parse(json)["results"].collect {|t| t["formatted"] = format_content(t["text"])}
 end
 
 def json_for_url(terms)
-  puts url % [terms, 0]
   open(url % [terms, 0]).read
 end
 
