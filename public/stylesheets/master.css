@@ -41,7 +41,7 @@ a, a:link, a:visited { text-decoration: underline; font-weight: bold; color: #ff
 #go { font-family:Georgia,"Times New Roman",serif;  font-size: 26px; margin-top: 32px; }
 .tweet .date { font-family:Georgia,"Times New Roman", serif; font-size: 12px; color: #fff; text-align: right; font-style: italic;}
 
-
+#credits { font-family:Georgia,"Times New Roman",serif; font-size: 12px; margin-top: 32px; font-style: italic; }
 #about p {
   margin-bottom: 18px;
 }
