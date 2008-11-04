@@ -100,17 +100,16 @@ def format_content(text)
   urls = URI.extract(text).uniq.sort
   urls.each do |raw_url|
     begin
-      inside = case URI.parse(raw_url).host
+      case URI.parse(raw_url).host
       when 'snaptweet.com'
-        %(<img src='#{raw_url}.thumb' alt=''/>)
+        result.gsub!(raw_url, %(<br/><a href='#{raw_url}'><img src='#{raw_url}.thumb' alt=''/></a>))
       else
-        raw_url
+        result.gsub!(raw_url, %(<a href='#{raw_url}'>#{raw_url}</a>))
       end
-      result.gsub!(raw_url, %(<a href='#{raw_url}'>#{inside}</a>))
     rescue => boom
-      
     end
   end
+  result.gsub!('#frth', '')
   result.gsub!(/(^|\s)@([[:alnum:]_]+)/) do 
     "#{$1}<a href='http://twitter.com/#{$2}' title='See twitter profile for #{$2}'>@#{$2}</a>"
   end
