@@ -1,6 +1,9 @@
 role :web, "codefluency.com"
 role :app, "codefluency.com"
 
+set :scm, :git
+set :repository, 'git://github.com/bruce/frth.git'
+
 set :user, 'frth'
 set :deploy_to, "/home/#{user}/site"
 
@@ -11,7 +14,7 @@ after "deploy:symlink", "deploy:update_git_submodules"
 namespace :deploy do
   
   task :update_git_submodules do
-    run "cd #{current_path} && brigit update", :max_hosts => hosts
+    run "cd #{current_path} && brigit update"
   end
   
   task :finalize_update, :except => { :no_release => true } do
