@@ -13,6 +13,7 @@ load 'deploy' if respond_to?(:namespace) # cap2 differentiator
 
 after "deploy:symlink", "deploy:update_git_submodules"
 before "deploy:start", "deploy:write_thin_config"
+before "deploy:stop", "deploy:write_thin_config"
   
 namespace :deploy do
   
@@ -63,11 +64,11 @@ namespace :deploy do
       'max_persistent_conns' => 512,
       'daemonize' => true
     }.to_yaml
-    put conf, "#{current_path}/config/thin.yml"
+    put config, "#{shared_path}/thin.yml"
   end
   
   def thin(command)
-    run "thin -s 2 -C config/thin.yml -R config/config.ru #{command}"
+    run "thin -s 2 -C #{shared_path}/thin.yml -R config/config.ru #{command}"
   end
 
 end
