@@ -95,7 +95,7 @@ a, a:link, a:visited { text-decoration: underline; font-weight: bold; color: #ff
 
 .tweet {
   color: #B9C6FF;
-  background: url(/images/box.jpg) bottom left repeat-x;
+  background: #275384 url(/images/box.jpg) bottom left repeat-x;
   position: relative;
   padding: 18px;
   width: 28.571em; /* 400.0px at 14px base */
