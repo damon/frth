@@ -78,7 +78,9 @@ def format_content(text)
     end
     result.gsub!(raw_url, %(<a href='#{raw_url}'>#{inside}</a>))
   end
-  result  
+  result.gsub(/(^|\s)@([[:alnum:]_]+)/) do 
+    "#{$1}<a href='http://twitter.com/#{$2}' title='See twitter profile for #{$2}'>@#{$2}</a>"
+  end
 end
 
 def sort_tweets(tweets)
