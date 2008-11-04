@@ -33,11 +33,14 @@ get "/tweets" do
 end
 
 get "/fetch" do
-  return CACHE["tweets"] if CACHE["last_fetch"] && (Time.now - CACHE["last_fetch"]) < TWITTER_WAIT_TIMEOUT
-
-  CACHE["last_fetch"] = Time.now
-  CACHE["tweets"] = get_tweets.map { |tweet| format_tweet(tweet) }
-  puts "Cached #{CACHE["tweets"].size} tweet(s)"
+  if CACHE["last_fetch"] && (Time.now - CACHE["last_fetch"]) < TWITTER_WAIT_TIMEOUT
+    age = Time.now - CACHE["last_fetch"]
+    puts "Retrieving existing tweets (cached #{age}s ago)"
+  else
+    CACHE["last_fetch"] = Time.now
+    CACHE["tweets"] = get_tweets.map { |tweet| format_tweet(tweet) }
+    puts "Cached #{CACHE["tweets"].size} tweet(s)"
+  end
   redirect "/tweets"
 end
 
