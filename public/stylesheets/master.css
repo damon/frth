@@ -98,10 +98,11 @@ a, a:link, a:visited { text-decoration: underline; font-weight: bold; color: #ff
   background: #275384 url(/images/box.jpg) bottom left repeat-x;
   position: relative;
   padding: 18px;
-  width: 28.571em; /* 400.0px at 14px base */
+  width: 550px;
   border-top: 1px #69768C solid;
   margin-bottom: 9px;
   text-align: left;
+  min-height: 90px;
 }
 
 /* Clear fix elements */
