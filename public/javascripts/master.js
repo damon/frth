@@ -1,21 +1,21 @@
 var tweets = [];
- var max_tweet = 0;
+var max_tweet = 0;
+var page_size = 40;
+ 
+ function prune() {
+   var items = $('#tweets li').slice(page_size)
+   if (items.length) {
+     items.remove();
+     $('#more').show();
+   }
+ }
  
  function display_next_tweet() {
    if (tweets.length) {
      tweet = tweets.pop();
-     tweet_li = $("<li class='tweet'></li>")
-       .hide()
-       .html(tweet.formatted)
-       .prependTo("#tweets")
-       .toggle("slide", {direction: "up"}, 800);
-     setTimeout(function() {
-       // console.log($(this).height());
-       // $(this).css({top: -1 * $(this).height() + "px"});
-       // $(this).css({top: -$(this).height()})
-       //   .css({opacity: 10})
-       //   .animate({top: 0});
-     }, 100);
+     $('#more').hide();
+     $('#tweets').scrollbox.push($("<li class='tweet'></li>").html(tweet.formatted));
+     setTimeout(prune, 800);
      setTimeout(display_next_tweet, 1500);
    }
    else {
@@ -34,5 +34,6 @@ var tweets = [];
  }
    
  $(function() {
+   $('#tweets').scrollbox();
    get_more_tweets();
  });

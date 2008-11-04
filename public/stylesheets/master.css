@@ -10,12 +10,16 @@ body {
   color: #4B4742;
   background: #1A538C;
   margin: 2.75em 0.4em 0 0.4em;
+  text-align: left;
+  color: #A0BFFA;
 }
 
-a { text-decoration: underline; font-weight: bold; }
-a:link { color: #c6a952; }
-a:hover { color: #c6a952; }
-a:visited { color: #c6a952; }
+h1 { font-family:Georgia,"Times New Roman",serif; font-size: 48px; color: #A0BFFA; margin: 0 0 32px 0; text-align: left; }
+
+a, a:link, a:visited { text-decoration: underline; font-weight: bold; color: #fff; }
+
+
+#more { display: none; }
 
 #page {
   width: 80%;
