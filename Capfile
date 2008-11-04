@@ -1,3 +1,5 @@
+require 'yaml'
+
 role :web, "codefluency.com"
 role :app, "codefluency.com"
 
@@ -10,6 +12,7 @@ set :deploy_to, "/home/#{user}/site"
 load 'deploy' if respond_to?(:namespace) # cap2 differentiator
 
 after "deploy:symlink", "deploy:update_git_submodules"
+before "deploy:start", "deploy:write_thin_config"
   
 namespace :deploy do
   
@@ -44,6 +47,23 @@ namespace :deploy do
 
   # Only for rails apps..
   task :migrate do
+  end
+  
+  def :write_thin_config
+    config = {
+      'environment' => 'production',
+      'chdir' => current_path,
+      'pid' => "#{shared_path}/pids/thin",
+      'log' => "#{shared_path}/log/thin.log",
+      'address' => 127.0.0.1
+      'port' => 8900
+      'rackup' => 'config/config.ru',
+      'max_conns' => 1024,
+      'timeout' => 30,
+      'max_persistent_conns' => 512,
+      'daemonize' => true
+    }.to_yaml
+    put conf, "#{current_path}/config/thin.yml"
   end
   
   def thin(command)
