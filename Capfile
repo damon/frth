@@ -8,6 +8,8 @@ set :repository, 'git://github.com/bruce/frth.git'
 
 set :user, 'frth'
 set :deploy_to, "/home/#{user}/site"
+set :deploy_via, :remote_cache
+set :use_sudo, false
 
 load 'deploy' if respond_to?(:namespace) # cap2 differentiator
 
