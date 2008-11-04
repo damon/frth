@@ -73,7 +73,7 @@ def email_for(name)
 end
 
 def tweet_terms
-  %w|front|
+  ENV['TERMS'] ? ENV['TERMS'].split(/\s+/) : %w|#frth|
 end
 
 def get_tweets
