@@ -6,7 +6,7 @@ require 'active_support'
 require 'json'
 require 'open-uri'
 
-TWITTER_WAIT_TIMEOUT = 60 unless Object.const_defined?("TWITTER_WAIT_TIMEOUT")
+TWITTER_WAIT_TIMEOUT = 6 unless Object.const_defined?("TWITTER_WAIT_TIMEOUT")
 
 before do
   # set UTF-8
@@ -25,16 +25,20 @@ get "/" do
 end
 
 get "/tweets" do
-  CACHE["tweets"]
+  tweets = CACHE["tweets"]
+  if params["since_id"]
+    tweets.reject! {|tweet| tweet["id"] <= params["since_id"].to_i }
+  end
+  tweets.to_json
 end
 
 get "/fetch-tweets-from-twitter" do
   return CACHE["tweets"] if CACHE["last_fetch"] && (Time.now - CACHE["last_Fetch"]) < TWITTER_WAIT_TIMEOUT
   
-  CACHE["last_Fetch"] = Time.now
+  CACHE["last_fetch"] = Time.now
   CACHE["tweets"] = get_tweets
   
-  redirect "/"
+  redirect "/tweets"
 end
 
 def tweeters
@@ -47,21 +51,26 @@ end
 
 def get_tweets
   begin
-    tweeters.collect do |tweeter|
+    tweets = tweeters.collect do |tweeter|
       get_tweets_for(tweeter)
-    end
+    end.flatten
+    sort_tweets(tweets)
   rescue
     CACHE["tweets"] || {}
   end
 end
 
+def sort_tweets(tweets)
+  tweets.sort {|a,b| b["id"] <=> a["id"]}
+end
+
 def get_tweets_for(user)
   json = json_for_url(CGI.escape("from:#{user} #{tweet_terms.join(" ")}"))
-  JSON.parse(json)
+  JSON.parse(json)["results"]
 end
 
 def json_for_url(terms)
   open(url % terms).read
 end
 
-def url; "http://search.twitter.com/search.json?q=%s"; end
+def url; "http://search.twitter.com/search.json?q=%s&since_id=%s"; end
