@@ -68,7 +68,7 @@ namespace :deploy do
   end
   
   def thin(command)
-    run "thin -s 2 -C #{shared_path}/thin.yml -R config/config.ru #{command}"
+    run "thin -s 2 -C #{shared_path}/thin.yml -R config/config.ru -D -l #{shared_path}/log/sinatra.log #{command}"
   end
 
 end
