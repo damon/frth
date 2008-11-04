@@ -34,7 +34,7 @@ end
 
 get "/fetch-tweets-from-twitter" do
   return CACHE["tweets"] if CACHE["last_fetch"] && (Time.now - CACHE["last_fetch"]) < TWITTER_WAIT_TIMEOUT
-  
+
   CACHE["last_fetch"] = Time.now
   CACHE["tweets"] = get_tweets
   
@@ -70,7 +70,8 @@ def get_tweets_for(user)
 end
 
 def json_for_url(terms)
-  open(url % terms).read
+  puts url % [terms, 0]
+  open(url % [terms, 0]).read
 end
 
 def url; "http://search.twitter.com/search.json?q=%s&since_id=%s"; end
