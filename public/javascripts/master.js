@@ -16,10 +16,10 @@ var page_size = 10;
      $('#more').hide();
      $('#tweets').scrollbox.push($("<li class='tweet'></li>").html(tweet.formatted));
      setTimeout(prune, 800);
-     setTimeout(display_next_tweet, 1500);
+     setTimeout(display_next_tweet, 2500);
    }
    else {
-     setTimeout(get_more_tweets, 1500);
+     setTimeout(get_more_tweets, 30000);
    }
  }
  
