@@ -35,4 +35,13 @@ namespace :deploy do
   task :restart, :roles => :app do
     run "touch #{current_path}/tmp/restart.txt"
   end
+
+  # Not needed
+  task :start do
+  end
+
+  # Not needed
+  task :stop do
+  end
+  
 end
