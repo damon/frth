@@ -28,7 +28,7 @@ end
 
 get "/" do
   @title = "Tweet Row to History"
-  erb :index
+  erb :index, :views_directory => 'views'
 end
 
 get "/tweets" do
