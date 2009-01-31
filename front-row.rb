@@ -1,5 +1,3 @@
-$:.unshift "sinatra/lib"
-
 require 'rubygems'
 
 require 'digest/md5'
@@ -10,9 +8,15 @@ require 'open-uri'
 
 TWITTER_WAIT_TIMEOUT = 6 unless Object.const_defined?("TWITTER_WAIT_TIMEOUT")
 
+configure :production do
+  require 'fiveruns/dash/sinatra'
+  token = File.read(File.dirname(__FILE__) << "/public/system/dash.txt").strip
+  Fiveruns::Dash::Sinatra.start(token)
+end
+
 before do
   # set UTF-8
-  header "Content-Type" => "text/html; charset=utf-8"
+  response["Content-Type"] = "text/html; charset=utf-8"
 
   # set css body id
   @body_id = "home"
@@ -32,7 +36,7 @@ get "/" do
 end
 
 get "/tweets" do
-  tweets = CACHE["tweets"]
+  tweets = CACHE["tweets"] ||= []
   if params["since_id"]
     tweets.reject! {|tweet| tweet["id"] <= params["since_id"].to_i }
   end
